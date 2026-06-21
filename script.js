@@ -13,17 +13,14 @@ function sendData() {
 
   fetch(API_URL, {
     method: "POST",
+    mode: "no-cors",
     headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify(data)
-  })
-  .then(() => {
-    document.getElementById("msg").innerText = "Ajouté avec succès !";
-  })
-  .catch(err => {
-    console.log("Erreur POST:", err);
   });
+
+  document.getElementById("msg").innerText = "Envoyé ✔";
 }
 
 // 🔵 LOGIN ADMIN
@@ -57,7 +54,10 @@ function loadAdmin() {
           <th>Salaire</th>
         </tr>
       `;
-
+      if (!nom || !prenom || !discord || !minerais) {
+        alert("Remplis tout !");
+        return;
+      }
       data.forEach(e => {
         let salaire = Number(e.minerais) * 60;
         total += salaire;
